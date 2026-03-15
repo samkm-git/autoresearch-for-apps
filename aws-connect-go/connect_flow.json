@@ -1,0 +1,78 @@
+{
+    "Version": "2019-10-30",
+    "StartAction": "Action_Menu",
+    "Actions": [
+        {
+            "Identifier": "Action_Menu",
+            "Parameters": {
+                "Text": "Welcome to Hospital at Hand",
+                "TextToSpeechType": "text"
+            },
+            "Transitions": {
+                "Conditions": [
+                    {
+                        "Condition": {
+                            "Operands": "1",
+                            "Operator": "Equals"
+                        },
+                        "Transition": "Action_1"
+                    },
+                    {
+                        "Condition": {
+                            "Operands": "2",
+                            "Operator": "Equals"
+                        },
+                        "Transition": "Action_2"
+                    },
+                    {
+                        "Condition": {
+                            "Operands": "3",
+                            "Operator": "Equals"
+                        },
+                        "Transition": "Action_3"
+                    },
+                    {
+                        "Condition": {
+                            "Operands": "4",
+                            "Operator": "Equals"
+                        },
+                        "Transition": "Action_4"
+                    }
+                ],
+                "Errors": [
+                    {
+                        "ErrorType": "NoMatchingCondition",
+                        "NextAction": "Action_Disconnect"
+                    }
+                ],
+                "NextAction": "Action_Disconnect"
+            },
+            "Type": "GetUserInput"
+        },
+        {
+            "Identifier": "Action_1",
+            "Parameters": {
+                "Text": "We are now transferring you to +919566996675"
+            },
+            "Transitions": {
+                "NextAction": "Action_Disconnect"
+            },
+            "Type": "MessageParticipant"
+        },
+        {
+            "Identifier": "Action_3",
+            "Parameters": {
+                "Text": "We are processing your request. Type: Redirect"
+            },
+            "Transitions": {
+                "NextAction": "Action_Disconnect"
+            },
+            "Type": "MessageParticipant"
+        },
+        {
+            "Identifier": "Action_Disconnect",
+            "Parameters": {},
+            "Type": "DisconnectParticipant"
+        }
+    ]
+}
