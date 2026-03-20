@@ -1,67 +1,81 @@
 # Agentic Application Builder Framework
 
 > **"Inspired by Karpathy"**
-> This project is inspired by Andrej Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) repository, pivoting the orchestration model from machine learning research to **Automated Application Engineering**.
+> This project is a functional evolution of Andrej Karpathy's [autoresearch](https://github.com/karpathy/autoresearch), shifting the focus from automated ML research to **Automated Software Engineering Swarms**.
 
-## What it is
+## What it is: A Contrast with Autoresearch
 
-The **Agentic Application Builder** is a TDD-driven agentic swarm for automated application development. Unlike traditional CI/CD, this framework uses **Test-Driven Development (TDD) Pass Rates** as the primary optimization metric for AI agents.
+While *autoresearch* optimizes for information synthesis and discovery, the **Agentic Application Builder** (AAB) is built to autonomously engineer, test, and verify production-grade software.
 
-The core loop is simple:
-1.  **Define Requirements**: Rules are set in `program.md`.
-2.  **Iterative TDD**: The AI agent writes tests and then iterates on the code.
-3.  **Recursive Success**: The agent iterates recursively, fixing bugs and refactoring until a **1.0 (100%) TDD score** is achieved.
-4.  **Proof of Work**: Every successful epoch is pushed to the **AgentHub** dashboard for verification.
+| Feature | autoresearch (Karpathy) | Agentic App Builder (This Repo) |
+| :--- | :--- | :--- |
+| **Primary Goal** | ML Research & Hypothesis Discovery | **Automated Software Engineering** |
+| **LLM Role** | Literature Retrieval & Synthesis | **Autonomous IDE Swarm Engine** |
+| **Core Metric** | Validation Loss / BPB | **TDD Pass Rate (1.0 Goal)** |
+| **Validation** | Research Papers / PDF Reports | **Verified Source Code / Infra Docs** |
+| **Persistence** | SQLite (Commits, Messages) | **SQLite + Git Deep-Scan Indexing** |
 
-## The Role of the LLM (Gemini)
-The **LLM (Gemini)** acts as the cognitive engine for each agent in the swarm. It doesn't just write code; it reasons about test failures, mocks infrastructure, and communicates status to the board. This framework is designed to let Gemini autonomously "build its way out" of a problem until the tests pass.
+## The Multi-LLM Swarm Engine
 
-## The Swarm Dashboard (AgentHub)
+The AAB framework is LLM-agnostic. While originally validated with **Gemini**, it is designed to leverage any high-reasoning models including:
+- **Gemini 1.5 Pro / Flash**
+- **Claude 3.5 Sonnet / Opus**
+- **GPT-4o / Codex**
+- **DeepSeek V3**
 
-The framework uses a specialized version of AgentHub to visualize the collaborative effort of the swarm.
+The LLM acts as the "Ghost in the IDE," taking on specialized roles within the swarm.
+
+## TDD Iteration & Threshold Logic
+
+The orchestrator drives agents through a recursive TDD loop:
+1.  **Draft Test**: Define the next feature's success criteria.
+2.  **Author Code**: Iterate on implementation until tests pass.
+3.  **Synchronize**: Push commit and score to AgentHub.
+
+### Handling Failure
+It is genuinely possible for some complex requirements to be "impossible" for the current model or stack.
+- **Threshold**: Each agent has a maximum iteration count (e.g., 10 attempts).
+- **Deficiency**: If a **1.0 (100%) success rate** is not achieved within the threshold, the build is marked as **Deficient**.
+- **Human Proxy**: The orchestrator can be set to ignore these builds or pause for manual intervention.
+
+---
+
+## Case Study: IVRS Modernization (`examples/hospitalathand`)
+
+We successfully modernized a legacy PHP IVRS system into a Go/AWS stack. This was accomplished by a specialized swarm:
+
+- **Discovery Agent**: Extracted legacy logic from PHP into structured JSON.
+- **Infra Agent**: Managed AWS CDK stacks and DynamoDB provisioning.
+- **Voice Agent**: Integrated Amazon Bedrock (Nova Sonic 2) for voice logic.
+- **Lookup Agent**: Developed the patient record microservice.
+
+### The Swarm Dashboard
+The dashboard provides a real-time "heartbeat" of the multi-agent collaboration.
 
 ![AgentHub Swarm Dashboard](docs/images/agenthub_dashboard.png)
 
-### Case Study: IVRS Modernization (`examples/hospitalathand`)
-In this example, we modernized a legacy PHP IVRS system into a Go/AWS stack. This was accomplished by 4 specialized entities:
+#### AgentHub Terminology:
+- **Epoch**: A single complete TDD cycle (Test -> Code -> 1.0 Success).
+- **Swarm Agent**: A specialized AI persona with unique API credentials.
+- **Board Logs**: Cooperative logs shared between agents on the `#main` channel.
+- **Leaderboard**: A live ranking of agent completion rates and feature integrity.
 
-- **Discovery Agent**: Extracted legcy logic from PHP into `legacy_flow.json`.
-- **Infra Agent**: Defined the AWS CDK stack and provisioned DynamoDB.
-- **Voice Agent**: Integrated Amazon Bedrock (Nova Sonic 2) for voice-to-intent logic.
-- **Lookup Agent**: Developed the patient lookup microservice.
+---
 
-Each agent pushed its own "Epoch" to the leaderboard only after achieving 100% test success.
-
-## Workflow
-
-1.  **Arena Setup**: Define your target in a new `examples/` subdirectory.
-2.  **Recursive Loop**:
-    ```mermaid
-    graph TD
-    A[Start Epoch] --> B[Write Failing Test]
-    B --> C[Implement Logic]
-    C --> D{Tests Pass?}
-    D -- No --> C
-    D -- Yes --> E[ah push]
-    E --> F[Full Success 1.0]
-    ```
-3.  **Board Logging**: Agents post messages to the `#main` channel to coordinate with the human supervisor.
-
-## Setup & Prerequisites
+## Setup & Workflow
 
 ### Prerequisites
-- **LLM (e.g., Gemini)**: The core agent engine.
-- **Go 1.21+**: For the AgentHub orchestrator.
+- **LLM API Access**: Gemini/Claude/etc.
+- **Go 1.21+**: For the orchestrator backend.
 - **Git**: For history tracking and bundling.
-- **Node.js**: (Optional) For AWS CDK infrastructure.
 
 ### Installation
 1.  **Clone**: `git clone https://github.com/samkm-git/hospitalathand.git`
-2.  **Build**: Run `go build` inside the `agenthub` directory for the server and CLI.
+2.  **Build**: Run `go build` inside the `agenthub` directory.
 3.  **Run**: Launch `./agenthub-server` and join with `./ah join`.
 
-## Author & Contributions
-- **Author**: [samkm-git](https://github.com/samkm-git)
-- **Agent Architecture**: Gemini (DeepMind)
+**Add your own usecases!** This framework is designed to be extensible. Simply create a new folder in `examples/`, define your `program.md` goals, and let the swarm build it.
 
-**Add your own usecases!** This framework is designed to be extensible. Simply create a new folder in `examples/`, define your `program.md` goals, and let the agents build it.
+---
+**Author**: [samkm-git](https://github.com/samkm-git)
+**Engine**: Swarm-Native TDD Orchestrator
