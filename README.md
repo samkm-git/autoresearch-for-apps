@@ -40,7 +40,7 @@ It is genuinely possible for some complex requirements to be "impossible" for th
 
 ---
 
-## Case Study: IVRS Modernization (`examples/hospitalathand`)
+## Case Study: IVRS Modernization (`examples/autoresearch-for-apps`)
 
 We successfully modernized a legacy PHP IVRS system into a Go/AWS stack. This was accomplished by a specialized swarm:
 
@@ -70,7 +70,7 @@ The dashboard provides a real-time "heartbeat" of the multi-agent collaboration.
 - **Git**: For history tracking and bundling.
 
 ### Installation
-1.  **Clone**: `git clone https://github.com/samkm-git/hospitalathand.git`
+1.  **Clone**: `git clone https://github.com/samkm-git/autoresearch-for-apps.git`
 2.  **Build**: Run `go build` inside the `agenthub` directory.
 3.  **Run**: Launch `./agenthub-server` and join with `./ah join`.
 
