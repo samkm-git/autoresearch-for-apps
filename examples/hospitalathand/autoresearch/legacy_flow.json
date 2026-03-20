@@ -1,0 +1,21 @@
+{
+    "Main_Menu": {
+        "Prompt": "Welcome to Hospital at Hand",
+        "Options": {
+            "1": "call your Doctor",
+            "2": "know your account details",
+            "3": "record and send your voice message to your doctor",
+            "4": "report emergency"
+        }
+    },
+    "Routing": {
+        "1": {
+            "action_type": "Dial",
+            "target": "+919566996675"
+        },
+        "3": {
+            "action_type": "Redirect",
+            "target": "http://hospitalathand.eu-gb.mybluemix.net/ivrs.php"
+        }
+    }
+}
